@@ -1,0 +1,169 @@
+"use client";
+
+import React, { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { editMaterialAction } from "../libs/action";
+import { useFormStatus } from "react-dom";
+import { Button } from "@/components/ui/button";
+
+const initialState = {
+  message: "",
+  success: false,
+  redirectUrl: "",
+};
+
+const UpdateButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="w-full" disabled={pending}>
+      {pending ? "Loading..." : "Update Materi"}
+    </Button>
+  );
+};
+
+const EditMaterialForm = ({ material, categories }) => {
+  const editById = (prevState, formData) => editMaterialAction(prevState, formData, material?.id);
+  const [state, formAction] = useActionState(editById, initialState);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state.success) {
+      router.push(state.redirectUrl);
+    }
+  }, [state.success, state.redirectUrl, router]);
+
+  return (
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">Edit Materi</h1>
+      
+      {state.message && (
+        <div className={`p-3 mb-4 rounded-md ${
+          state.success 
+            ? "bg-green-100 text-green-700" 
+            : "bg-red-100 text-red-700"
+        }`}>
+          {state.message}
+        </div>
+      )}
+
+      <form action={formAction} className="space-y-6">
+        <div>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+            Judul Materi *
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            defaultValue={material?.title || ""}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Contoh: Pengenalan React.js"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 mb-2">
+            Kategori *
+          </label>
+          <select
+            id="categoryId"
+            name="categoryId"
+            required
+            defaultValue={material?.categoryId || ""}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Pilih Kategori</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+            Deskripsi
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            rows={4}
+            defaultValue={material?.description || ""}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+            placeholder="Jelaskan detail materi ini"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="youtube_url" className="block text-sm font-medium text-gray-700 mb-2">
+            URL YouTube
+          </label>
+          <input
+            type="url"
+            id="youtube_url"
+            name="youtube_url"
+            defaultValue={material?.youtube_url || ""}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="https://www.youtube.com/watch?v=..."
+          />
+          <p className="mt-1 text-sm text-gray-500">
+            Masukkan link video YouTube untuk materi ini
+          </p>
+        </div>
+
+        <div>
+          <label htmlFor="pdf_file" className="block text-sm font-medium text-gray-700 mb-2">
+            File PDF
+          </label>
+          <input
+            type="file"
+            id="pdf_file"
+            name="pdf_file"
+            accept=".pdf"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+          <p className="mt-1 text-sm text-gray-500">
+            Upload file PDF baru untuk mengganti yang lama (maksimal 10MB). Kosongkan jika tidak ingin mengubah.
+          </p>
+          {material?.pdf_url && (
+            <p className="mt-1 text-sm text-green-600">
+              File PDF saat ini: {material.pdf_url}
+            </p>
+          )}
+        </div>
+
+        <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+          <p className="text-sm text-yellow-800">
+            <strong>Catatan:</strong> Setidaknya satu dari URL YouTube atau File PDF harus tersedia.
+          </p>
+        </div>
+
+        <div className="bg-gray-50 border border-gray-200 rounded-md p-4">
+          <h3 className="text-sm font-medium text-gray-700 mb-2">Informasi Saat Ini:</h3>
+          <div className="text-sm text-gray-600 space-y-1">
+            <p><strong>Kategori:</strong> {material?.category?.name}</p>
+            <p><strong>Dibuat:</strong> {new Date(material?.createdAt).toLocaleDateString('id-ID')}</p>
+            <p><strong>Terakhir diupdate:</strong> {new Date(material?.updatedAt).toLocaleDateString('id-ID')}</p>
+          </div>
+        </div>
+
+        <div className="flex space-x-4">
+          <UpdateButton />
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() => router.back()}
+          >
+            Batal
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default EditMaterialForm;
