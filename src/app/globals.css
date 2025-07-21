@@ -144,3 +144,44 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom animations for fade-in effects */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+/* Footer specific styles */
+.footer-link {
+  @apply text-gray-400 hover:text-white transition-colors duration-200;
+}
+
+.footer-social {
+  @apply text-gray-400 hover:text-blue-400 transition-colors duration-200;
+}
+
+/* Ensure main content takes remaining space */
+html,
+body {
+  height: 100%;
+}
+
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
