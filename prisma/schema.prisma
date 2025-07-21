@@ -8,7 +8,6 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
-        
 
 model User {
   id        Int @id @default(autoincrement())
@@ -29,29 +28,66 @@ enum Role {
 }
 
 model Category {
-  id        Int @id @default(autoincrement())
-  name      String @unique
+  id          Int @id @default(autoincrement())
+  name        String @unique
   description String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  materials Material[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
+  // Relasi ke series
+  series      Series[]
 
   @@map("categories")
 }
 
+model Series {
+  id          Int @id @default(autoincrement())
+  name        String
+  description String? @db.Text
+  slug        String
+  thumbnail   String? // gambar cover series
+  level       Level @default(BEGINNER) // tingkat kesulitan
+  isActive    Boolean @default(true)
+  orderIndex  Int @default(0) // untuk mengurutkan series dalam kategori
+
+  // Relasi ke category
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Relasi ke materials
+  materials   Material[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Kombinasi categoryId + slug harus unique
+  @@unique([categoryId, slug])
+  @@map("series")
+}
+
+enum Level {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
 model Material {
-  id Int @id @default(autoincrement())
-  title String @db.VarChar(255)
+  id          Int @id @default(autoincrement())
+  title       String @db.VarChar(255)
   description String? @db.Text
   youtube_url String?
-  pdf_url String?
-  categoryId Int
-  category Category @relation(fields: [categoryId], references: [id])
+  pdf_url     String?
+  duration    Int? // durasi dalam detik
+  orderIndex  Int @default(0) // untuk mengurutkan video dalam series
+  isPublished Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // Relasi ke series (bukan langsung ke category)
+  seriesId    Int
+  series      Series @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("materials")
 }

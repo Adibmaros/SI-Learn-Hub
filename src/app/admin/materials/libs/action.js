@@ -9,13 +9,15 @@ export async function addMaterialAction(prevState, formData) {
     const description = formData.get("description")?.trim();
     const youtube_url = formData.get("youtube_url")?.trim();
     const pdf_file = formData.get("pdf_file");
-    const categoryId = formData.get("categoryId");
+    const seriesId = formData.get("seriesId");
+    const duration = formData.get("duration");
+    const orderIndex = formData.get("orderIndex");
 
     // Basic validation
-    if (!title || !categoryId) {
+    if (!title || !seriesId) {
       return {
         success: false,
-        message: "Judul dan kategori wajib diisi.",
+        message: "Judul dan series wajib diisi.",
       };
     }
 
@@ -71,13 +73,15 @@ export async function addMaterialAction(prevState, formData) {
         description: description || null,
         youtube_url: youtube_url || null,
         pdf_url: pdfUrl,
-        categoryId: parseInt(categoryId),
+        seriesId: parseInt(seriesId),
+        duration: duration ? parseInt(duration) : null,
+        orderIndex: orderIndex ? parseInt(orderIndex) : 0,
       },
     });
 
     // Revalidate the material pages
     revalidatePath("/admin/materials");
-    revalidatePath("/materials");
+    revalidatePath("/dashboard");
 
     return {
       success: true,
@@ -99,13 +103,15 @@ export async function editMaterialAction(prevState, formData, materialId) {
     const description = formData.get("description")?.trim();
     const youtube_url = formData.get("youtube_url")?.trim();
     const pdf_file = formData.get("pdf_file");
-    const categoryId = formData.get("categoryId");
+    const seriesId = formData.get("seriesId");
+    const duration = formData.get("duration");
+    const orderIndex = formData.get("orderIndex");
 
     // Basic validation
-    if (!title || !categoryId) {
+    if (!title || !seriesId) {
       return {
         success: false,
-        message: "Judul dan kategori wajib diisi.",
+        message: "Judul dan series wajib diisi.",
       };
     }
 
@@ -183,13 +189,15 @@ export async function editMaterialAction(prevState, formData, materialId) {
         description: description || null,
         youtube_url: youtube_url || null,
         pdf_url: pdfUrl,
-        categoryId: parseInt(categoryId),
+        seriesId: parseInt(seriesId),
+        duration: duration ? parseInt(duration) : null,
+        orderIndex: orderIndex ? parseInt(orderIndex) : 0,
       },
     });
 
     // Revalidate the material pages
     revalidatePath("/admin/materials");
-    revalidatePath("/materials");
+    revalidatePath("/dashboard");
 
     return {
       success: true,

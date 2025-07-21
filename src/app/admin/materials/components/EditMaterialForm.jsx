@@ -22,7 +22,7 @@ const UpdateButton = () => {
   );
 };
 
-const EditMaterialForm = ({ material, categories }) => {
+const EditMaterialForm = ({ material, series }) => {
   const editById = (prevState, formData) => editMaterialAction(prevState, formData, material?.id);
   const [state, formAction] = useActionState(editById, initialState);
   const router = useRouter();
@@ -32,6 +32,16 @@ const EditMaterialForm = ({ material, categories }) => {
       router.push(state.redirectUrl);
     }
   }, [state.success, state.redirectUrl, router]);
+
+  // Group series by category
+  const seriesByCategory = series.reduce((acc, serie) => {
+    const categoryName = serie.category.name;
+    if (!acc[categoryName]) {
+      acc[categoryName] = [];
+    }
+    acc[categoryName].push(serie);
+    return acc;
+  }, {});
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -59,26 +69,30 @@ const EditMaterialForm = ({ material, categories }) => {
             required
             defaultValue={material?.title || ""}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Contoh: Pengenalan React.js"
+            placeholder="Contoh: Pengenalan React.js - Part 1"
           />
         </div>
 
         <div>
-          <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 mb-2">
-            Kategori *
+          <label htmlFor="seriesId" className="block text-sm font-medium text-gray-700 mb-2">
+            Series *
           </label>
           <select
-            id="categoryId"
-            name="categoryId"
+            id="seriesId"
+            name="seriesId"
             required
-            defaultValue={material?.categoryId || ""}
+            defaultValue={material?.seriesId || ""}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">Pilih Kategori</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
+            <option value="">Pilih Series</option>
+            {Object.entries(seriesByCategory).map(([categoryName, categorySeries]) => (
+              <optgroup key={categoryName} label={categoryName}>
+                {categorySeries.map((serie) => (
+                  <option key={serie.id} value={serie.id}>
+                    {serie.name} ({serie.level})
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>
@@ -135,6 +149,44 @@ const EditMaterialForm = ({ material, categories }) => {
           )}
         </div>
 
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">
+              Durasi (detik)
+            </label>
+            <input
+              type="number"
+              id="duration"
+              name="duration"
+              min="0"
+              defaultValue={material?.duration || ""}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="3600"
+            />
+            <p className="mt-1 text-sm text-gray-500">
+              Durasi video dalam detik (opsional)
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="orderIndex" className="block text-sm font-medium text-gray-700 mb-2">
+              Urutan dalam Series
+            </label>
+            <input
+              type="number"
+              id="orderIndex"
+              name="orderIndex"
+              min="0"
+              defaultValue={material?.orderIndex || 0}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="0"
+            />
+            <p className="mt-1 text-sm text-gray-500">
+              Angka lebih kecil ditampilkan lebih dulu
+            </p>
+          </div>
+        </div>
+
         <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
           <p className="text-sm text-yellow-800">
             <strong>Catatan:</strong> Setidaknya satu dari URL YouTube atau File PDF harus tersedia.
@@ -144,7 +196,8 @@ const EditMaterialForm = ({ material, categories }) => {
         <div className="bg-gray-50 border border-gray-200 rounded-md p-4">
           <h3 className="text-sm font-medium text-gray-700 mb-2">Informasi Saat Ini:</h3>
           <div className="text-sm text-gray-600 space-y-1">
-            <p><strong>Kategori:</strong> {material?.category?.name}</p>
+            <p><strong>Series:</strong> {material?.series?.name} ({material?.series?.level})</p>
+            <p><strong>Kategori:</strong> {material?.series?.category?.name}</p>
             <p><strong>Dibuat:</strong> {new Date(material?.createdAt).toLocaleDateString('id-ID')}</p>
             <p><strong>Terakhir diupdate:</strong> {new Date(material?.updatedAt).toLocaleDateString('id-ID')}</p>
           </div>

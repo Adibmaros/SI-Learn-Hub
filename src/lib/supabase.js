@@ -8,7 +8,7 @@ export const uploadImage = async (file, path = "divisi") => {
   const fileType = file.type.split("/")[1];
   const fileName = `${path}-${Date.now()}.${fileType}`;
 
-  const { error } = await supabase.storage.from("images").upload(`public/${path}/${fileName}`, file, {
+  const { error } = await supabase.storage.from("series").upload(`public/${path}/${fileName}`, file, {
     cacheControl: "3600",
     upsert: false,
   });
@@ -37,7 +37,7 @@ export const uploadPDF = async (file, path = "materials") => {
 };
 
 export const getImageUrl = (name, path = "divisi") => {
-  const { data } = supabase.storage.from("images").getPublicUrl(`public/${path}/${name}`);
+  const { data } = supabase.storage.from("series").getPublicUrl(`public/${path}/${name}`);
   return data.publicUrl;
 };
 
@@ -47,7 +47,7 @@ export const getPDFUrl = (name, path = "materials") => {
 };
 
 export const deleteFile = async (fileName, path = "brands") => {
-  const { error } = await supabase.storage.from("images").remove([`public/${path}/${fileName}`]);
+  const { error } = await supabase.storage.from("series").remove([`public/${path}/${fileName}`]);
   if (error) {
     console.error("Delete error:", error);
     throw error;

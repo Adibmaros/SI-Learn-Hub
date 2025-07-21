@@ -4,11 +4,13 @@ export async function getMaterialData() {
   try {
     const materials = await prisma.material.findMany({
       include: {
-        category: true,
+        series: {
+          include: {
+            category: true,
+          },
+        },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: [{ seriesId: "asc" }, { orderIndex: "asc" }, { createdAt: "desc" }],
     });
     return materials;
   } catch (error) {
@@ -22,7 +24,11 @@ export async function getMaterialById(id) {
     const material = await prisma.material.findUnique({
       where: { id: parseInt(id) },
       include: {
-        category: true,
+        series: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
     return material;
@@ -32,9 +38,46 @@ export async function getMaterialById(id) {
   }
 }
 
+export async function getMaterialsBySeries(seriesId) {
+  try {
+    const materials = await prisma.material.findMany({
+      where: { seriesId: parseInt(seriesId) },
+      orderBy: {
+        orderIndex: "asc",
+      },
+    });
+    return materials;
+  } catch (error) {
+    console.error("Error fetching materials by series:", error);
+    return [];
+  }
+}
+
+export async function getSeries() {
+  try {
+    const series = await prisma.series.findMany({
+      where: { isActive: true },
+      include: {
+        category: true,
+      },
+      orderBy: [{ categoryId: "asc" }, { orderIndex: "asc" }, { name: "asc" }],
+    });
+    return series;
+  } catch (error) {
+    console.error("Error fetching series:", error);
+    return [];
+  }
+}
+
 export async function getCategories() {
   try {
     const categories = await prisma.category.findMany({
+      include: {
+        series: {
+          where: { isActive: true },
+          orderBy: { orderIndex: "asc" },
+        },
+      },
       orderBy: {
         name: "asc",
       },

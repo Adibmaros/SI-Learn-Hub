@@ -1,10 +1,11 @@
 import React from "react";
-import { getMaterialById, getCategories } from "../libs/data";
+import { getMaterialById } from "../libs/data";
+import { getSeriesData } from "../../series/libs/data";
 import EditMaterialForm from "../components/EditMaterialForm";
 
 const page = async ({ params }) => {
   const id = parseInt(params.id);
-  const [material, categories] = await Promise.all([getMaterialById(id), getCategories()]);
+  const [material, series] = await Promise.all([getMaterialById(id), getSeriesData()]);
 
   if (!material) {
     return (
@@ -20,7 +21,11 @@ const page = async ({ params }) => {
     );
   }
 
-  return <EditMaterialForm material={material} categories={categories} />;
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <EditMaterialForm material={material} series={series} />
+    </div>
+  );
 };
 
 export default page;
