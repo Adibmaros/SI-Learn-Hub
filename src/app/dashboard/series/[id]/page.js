@@ -82,7 +82,7 @@ const SeriesContent = async ({ seriesId }) => {
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 mb-6 sm:mb-8">
         {/* KIRI */}
         <div className="flex-1">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{series.title}</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">{series.name}</h1>
           {series.description && <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{series.description}</p>}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
             <Badge variant="secondary" className="text-xs sm:text-sm md:text-base px-2 py-1 sm:px-3">
@@ -91,7 +91,7 @@ const SeriesContent = async ({ seriesId }) => {
             <Badge variant="outline" className="text-xs sm:text-sm md:text-base px-2 py-1 sm:px-3">
               {series.materials?.length || 0} Materi
             </Badge>
-            <span className="text-xs sm:text-sm text-gray-500">{series.duration} menit</span>
+            <span className="text-xs sm:text-sm text-gray-500">{series.materials.duration} menit</span>
           </div>
           <div className="text-xs sm:text-sm md:text-base text-blue-600 font-medium">Kategori: {series.category.name}</div>
         </div>

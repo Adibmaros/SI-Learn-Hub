@@ -202,7 +202,7 @@ const MaterialContent = async ({ id }) => {
             <li className="flex items-center">
               <span className="mx-1 sm:mx-2 text-gray-400">/</span>
               <Link href={`/dashboard/series/${material.series.id}`} className="text-gray-700 hover:text-blue-600 transition-colors">
-                <span className="truncate max-w-[120px] sm:max-w-none">{material.series.title}</span>
+                <span className="truncate max-w-[120px] sm:max-w-none">{material.series.name}</span>
               </Link>
             </li>
             <li className="flex items-center">
@@ -225,7 +225,7 @@ const MaterialContent = async ({ id }) => {
             </Link>
             <Link href={`/dashboard/series/${material.series.id}`}>
               <Badge variant="outline" className="cursor-pointer hover:bg-gray-100 transition-colors text-xs sm:text-sm">
-                {material.series.title}
+                {material.series.name}
               </Badge>
             </Link>
             <Badge variant="outline" className="text-xs sm:text-sm bg-blue-50 text-blue-700 border-blue-200">
@@ -282,7 +282,7 @@ const MaterialContent = async ({ id }) => {
               <div className="space-y-1">
                 <label className="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wide">Series</label>
                 <Link href={`/dashboard/series/${material.series.id}`}>
-                  <p className="text-blue-600 hover:text-blue-800 transition-colors font-medium break-words">{material.series.title}</p>
+                  <p className="text-blue-600 hover:text-blue-800 transition-colors font-medium break-words">{material?.series.name}</p>
                 </Link>
               </div>
               <div className="space-y-1">

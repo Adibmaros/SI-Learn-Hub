@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { getImageUrl } from "@/lib/supabase";
+import Image from "next/image";
 
 export function CategoryCard({ category }) {
   const totalMaterials = category.series?.reduce((total, series) => total + (series.materials?.length || 0), 0) || 0;
@@ -40,6 +42,7 @@ export function SeriesCard({ series }) {
       <Card className="hover:shadow-lg transition-shadow cursor-pointer">
         <CardHeader>
           <CardTitle className="text-lg">{series.name}</CardTitle>
+          <img src={getImageUrl(series.thumbnail, "series")} alt={series.name} className="w-full object-cover rounded-md" />
         </CardHeader>
         <CardContent>
           <p className="text-gray-600 mb-3">
@@ -98,7 +101,7 @@ export function MaterialCard({ material }) {
           </p>
           <div className="flex justify-between items-center mb-2">
             <Badge variant="outline">
-              {material.series?.title}
+              {material.series?.name}
             </Badge>
             <span className="text-sm text-gray-500">
               {material.duration} menit

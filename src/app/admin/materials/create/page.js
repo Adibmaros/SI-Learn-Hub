@@ -2,6 +2,8 @@ import React from "react";
 import { getSeriesData } from "../../series/libs/data";
 import CreateMaterialForm from "./CreateMaterialForm";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const series = await getSeriesData();
 

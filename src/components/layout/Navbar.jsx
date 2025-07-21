@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Home, User, Shield, Menu, LogOut, Settings, Users, BarChart3, FileText, BookOpen, Info, BookOpenCheck } from "lucide-react";
+import { Home, User, Shield, Menu, LogOut, Settings, Users, BarChart3, FileText, BookOpen, Info, BookOpenCheck, BookOpenIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
@@ -26,6 +26,7 @@ export default function Navbar() {
     const adminLinks = [
       { href: userRole === "ADMIN" ? "/admin" : "/", icon: Home, label: "Dashboard" },
       { href: "/admin/categories", icon: BookOpen, label: "Kategori Materi", adminOnly: true },
+      { href: "/admin/series", icon: BookOpenIcon, label: "Series", adminOnly: true },
       { href: "/admin/materials", icon: BookOpenCheck, label: "Materi", adminOnly: true },
 
 
