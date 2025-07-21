@@ -161,3 +161,24 @@ export async function getMaterialsByCategory(categoryId) {
     return [];
   }
 }
+
+export async function getMaterials() {
+  try {
+    const materials = await prisma.material.findMany({
+      include: {
+        series: {
+          include: {
+            category: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return materials;
+  } catch (error) {
+    console.error("Error fetching materials:", error);
+    return [];
+  }
+}
