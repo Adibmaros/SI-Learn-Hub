@@ -203,17 +203,6 @@ const EditMaterialForm = ({ material, series }) => {
           </div>
         </div>
 
-        <div className="flex space-x-4">
-          <UpdateButton />
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={() => router.back()}
-          >
-            Batal
-          </Button>
-        </div>
       </form>
     </div>
   );

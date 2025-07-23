@@ -17,8 +17,8 @@ export default function Navbar() {
   const getNavLinks = (userRole, isLoggedIn) => {
     // Public navigation links (available to everyone)
     const publicLinks = [
-      { href: "/", icon: Home, label: "Home" },
-      { href: "/dashboard/categories", icon: BookOpen, label: "Kategori Materi" },
+      { href: "/dashboard", icon: Home, label: "Home" },
+      { href: "/dashboard/categories", icon: BookOpen, label: "Kategori" },
       { href: "/about", icon: Info, label: "About" },
     ];
 
@@ -131,11 +131,14 @@ export default function Navbar() {
                 </div>
               </div>
             ) : (
-              <Link href="/login">
-                <Button variant="outline" size="sm">
-                  Admin Login
-                </Button>
-              </Link>
+              // <Link href="/login">
+              //   <Button variant="outline" size="sm">
+              //     Admin Login
+              //   </Button>
+              // </Link>
+              <div>
+                <span></span>
+              </div>
             )}
           </div>
 
@@ -226,14 +229,19 @@ export default function Navbar() {
                 </div>
               </div>
             ) : (
-              <div className="pt-4 pb-3 border-t border-gray-200">
-                <div className="px-2">
-                  <Link href="/login" onClick={() => setMobileOpen(false)}>
-                    <Button variant="outline" className="w-full">
-                      Admin Login
-                    </Button>
-                  </Link>
-                </div>
+              // <div className="pt-4 pb-3 border-t border-gray-200">
+              //   <div className="px-2">
+              //     <Link href="/login" onClick={() => setMobileOpen(false)}>
+              //       <Button variant="outline" className="w-full">
+              //         Admin Login
+              //       </Button>
+              //     </Link>
+              //   </div>
+              // </div>
+              <div>
+                <span>
+                  
+                </span>
               </div>
             )}
           </div>

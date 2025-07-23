@@ -191,31 +191,8 @@ export default function LoginPage() {
                 )}
               </Button>
             </form>
-
-            {/* Register Link */}
-            <div className="text-center text-sm">
-              <span className="text-muted-foreground">Belum punya akun? </span>
-              <Link href="/register" className="text-violet-600 hover:text-violet-500 dark:text-violet-400 dark:hover:text-violet-300 font-medium">
-                Daftar sekarang
-              </Link>
-            </div>
           </CardContent>
         </Card>
-
-        {/* Footer */}
-        <div className="text-center text-xs text-muted-foreground">
-          <p>
-            Dengan masuk, Anda menyetujui{" "}
-            <Link href="/terms" className="underline hover:text-foreground">
-              Syarat & Ketentuan
-            </Link>{" "}
-            dan{" "}
-            <Link href="/privacy" className="underline hover:text-foreground">
-              Kebijakan Privasi
-            </Link>{" "}
-            kami.
-          </p>
-        </div>
       </div>
     </div>
   );

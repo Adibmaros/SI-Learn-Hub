@@ -181,18 +181,6 @@ const CreateMaterialForm = ({ series }) => {
             <strong>Catatan:</strong> Setidaknya satu dari URL YouTube atau File PDF harus diisi.
           </p>
         </div>
-
-        <div className="flex space-x-4">
-          <SubmitButton />
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full"
-            onClick={() => router.back()}
-          >
-            Batal
-          </Button>
-        </div>
       </form>
     </div>
   );

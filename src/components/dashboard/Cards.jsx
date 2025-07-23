@@ -26,9 +26,6 @@ export function CategoryCard({ category }) {
               {totalMaterials} Materi
             </Badge>
           </div>
-          <div className="text-xs text-gray-500">
-            Dibuat: {new Date(category.createdAt).toLocaleDateString('id-ID')}
-          </div>
         </CardContent>
       </Card>
     </Link>
