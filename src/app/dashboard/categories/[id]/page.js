@@ -6,6 +6,8 @@ import { SeriesCard } from "@/components/dashboard/Cards";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+export const dynamic = "force-dynamic";
+
 // Loading component for the main content
 const CategoryContentSkeleton = () => (
   <div className="container mx-auto px-4 py-6 sm:py-8">

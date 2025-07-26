@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPDFUrl } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 // Loading skeleton for the entire page
 const MaterialPageSkeleton = () => (
   <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">

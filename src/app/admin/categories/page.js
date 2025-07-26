@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getCategories } from "./libs/data";
 import DeleteCategoryForm from "./components/DeleteCategoryForm";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const categories = await getCategories();
   console.log("Fetched categories:", categories);

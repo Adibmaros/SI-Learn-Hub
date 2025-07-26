@@ -4,6 +4,8 @@ import { getSeriesData } from "./libs/data";
 import { getImageUrl } from "@/lib/supabase";
 import DeleteSeriesForm from "./components/DeleteSeriesForm";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const series = await getSeriesData();
 

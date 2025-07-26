@@ -5,6 +5,8 @@ import { CategoryCard } from "@/components/dashboard/Cards";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Play, FileText, Plus, Search } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 // Loading skeleton for stats section
 const StatsSkeleton = () => (
   <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-blue-100">

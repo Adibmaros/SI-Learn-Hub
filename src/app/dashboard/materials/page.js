@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookOpen, Play, FileText, Filter, ArrowLeft, Search } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 // Loading Components
 const StatsLoading = () => (
   <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-green-100">

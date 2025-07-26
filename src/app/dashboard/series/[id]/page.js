@@ -6,6 +6,8 @@ import { MaterialCard } from "@/components/dashboard/Cards";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+export const dynamic = "force-dynamic";
+
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
   <div className="w-full max-w-screen-xl mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
