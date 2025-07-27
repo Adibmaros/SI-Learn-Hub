@@ -22,7 +22,7 @@ export async function getCategories() {
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
     return categories;

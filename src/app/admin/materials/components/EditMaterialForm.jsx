@@ -203,6 +203,7 @@ const EditMaterialForm = ({ material, series }) => {
           </div>
         </div>
 
+        <UpdateButton />
       </form>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSeriesById } from "@/lib/data";
-import { MaterialCard } from "@/components/dashboard/Cards";
+import { MaterialCard } from "../../materials/components/MaterialCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 

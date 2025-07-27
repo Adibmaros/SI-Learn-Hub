@@ -181,6 +181,7 @@ const CreateMaterialForm = ({ series }) => {
             <strong>Catatan:</strong> Setidaknya satu dari URL YouTube atau File PDF harus diisi.
           </p>
         </div>
+        <SubmitButton />
       </form>
     </div>
   );
