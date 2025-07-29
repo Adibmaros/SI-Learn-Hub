@@ -98,9 +98,9 @@ export function MaterialCard({ material }) {
             {/* Series badge */}
             {material.series?.name && (
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-2 py-1 rounded-full border-0 font-medium text-xs truncate max-w-[140px] sm:max-w-none">
-                  📚 {material.series.name}
-                </Badge>
+               <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-2 py-1 rounded-full border-0 font-medium text-xs min-w-0 break-all">
+  📚 {material.series.name}
+</Badge>
               </div>
             )}
 

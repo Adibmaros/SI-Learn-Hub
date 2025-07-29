@@ -3,28 +3,41 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { BookOpen, Briefcase, Users2, Library, Folder, BarChart3, FileText, Users, ArrowRight } from "lucide-react";
 
 const DashboardPage = () => {
   const features = [
     {
-      icon: "📚",
-      title: "Kategori Pembelajaran",
-      description: "Jelajahi berbagai kategori pembelajaran Sistem Informasi yang terstruktur",
+      icon: BookOpen,
+      title: "Materi Programming",
+      description: "Akses materi programming yang terorganisir per semester sesuai kurikulum Sistem Informasi UIN Raden Fatah Palembang untuk pembelajaran yang terstruktur",
       link: "/dashboard/categories",
     },
     {
-      icon: "📖",
-      title: "Materi Pembelajaran",
-      description: "Akses materi pembelajaran lengkap dari berbagai topik",
+      icon: Briefcase,
+      title: "Semua Materi Pembelajaran",
+      description: "Jelajahi koleksi lengkap semua materi pembelajaran dari berbagai topik dan kategori dalam satu tempat",
       link: "/dashboard/materials",
+    },
+    {
+      icon: Users2,
+      title: "Mentorship Program",
+      description: "Program mentorship yang menghubungkan mahasiswa junior dengan senior dan alumni untuk bimbingan karir dan akademik",
+      link: "/dashboard/mentorship",
+    },
+    {
+      icon: Library,
+      title: "Resource Library",
+      description: "Kumpulan file, dokumen, link, dan sumber daya berguna untuk mendukung pembelajaran dan pengembangan skill",
+      link: "/dashboard/resources",
     },
   ];
 
   const stats = [
-    { label: "Kategori", value: "15+", icon: "📂" },
-    { label: "Series", value: "50+", icon: "📊" },
-    { label: "Materi", value: "200+", icon: "📄" },
-    { label: "Pengguna", value: "1000+", icon: "👥" },
+    { label: "Kategori", value: "15+", icon: Folder },
+    { label: "Series", value: "50+", icon: BarChart3 },
+    { label: "Materi", value: "200+", icon: FileText },
+    { label: "Pengguna", value: "1000+", icon: Users },
   ];
 
   return (
@@ -35,7 +48,7 @@ const DashboardPage = () => {
           <div className="space-y-6">
             <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-4">
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-              Platform Pembelajaran Sistem Informasi
+              Platform Pembelajaran Mahasiswa Sistem Informasi UIN RF Palembang
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
@@ -43,7 +56,7 @@ const DashboardPage = () => {
             </h1>
 
             <p className="text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Platform pembelajaran terpadu untuk mengembangkan kemampuan Sistem Informasi Anda. Akses materi berkualitas, ikuti series pembelajaran terstruktur, dan kembangkan skill IT Anda.
+              Platform pembelajaran terpadu yang dirancang khusus untuk mendukung mahasiswa Sistem Informasi UIN Raden Fatah Palembang dalam mengembangkan kemampuan programming dan skill dunia kerja yang dibutuhkan di era digital.
             </p>
           </div>
 
@@ -67,58 +80,47 @@ const DashboardPage = () => {
 
         {/* Stats Section */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
-                <div className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                <div className="text-sm lg:text-base text-gray-600 font-medium">{stat.label}</div>
-              </CardContent>
-            </Card>
-          ))}
+          {stats.map((stat, index) => {
+            const IconComponent = stat.icon;
+            return (
+              <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
+                <CardContent className="p-6 text-center">
+                  <IconComponent className="w-8 h-8 mx-auto mb-2 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
+                  <div className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                  <div className="text-sm lg:text-base text-gray-600 font-medium">{stat.label}</div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Features Section */}
         <div className="space-y-8">
           <div className="text-center space-y-4">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">Fitur Unggulan</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Temukan berbagai fitur yang membantu perjalanan pembelajaran Anda</p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Fitur yang mendukung pembelajaran programming dan persiapan karir mahasiswa SI UIN RF Palembang</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8">
-            {features.map((feature, index) => (
-              <Link key={index} href={feature.link}>
-                <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer h-full border-0 bg-white/80 backdrop-blur-sm hover:scale-[1.02]">
-                  <CardContent className="p-6 lg:p-8 space-y-4">
-                    <div className="text-4xl lg:text-5xl group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{feature.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                    <div className="flex items-center text-blue-600 font-medium group-hover:translate-x-2 transition-transform duration-300">
-                      Mulai Sekarang
-                      <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <Link key={index} href={feature.link}>
+                  <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer h-full border-0 bg-white/80 backdrop-blur-sm hover:scale-[1.02]">
+                    <CardContent className="p-6 lg:p-8 space-y-4">
+                      <IconComponent className="w-10 h-10 lg:w-12 lg:h-12 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
+                      <h3 className="text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{feature.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                      <div className="flex items-center text-blue-600 font-medium group-hover:translate-x-2 transition-transform duration-300">
+                        Mulai Sekarang
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
-        </div>
-
-        {/* Call to Action Section */}
-        <div className="mt-20 text-center">
-          <Card className="border-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-            <CardContent className="p-8 lg:p-12">
-              <h3 className="text-2xl lg:text-3xl font-bold mb-4">Siap Untuk Memulai Perjalanan Belajar Anda?</h3>
-              <p className="text-lg lg:text-xl mb-8 opacity-90">Bergabunglah dengan ribuan pelajar lainnya dan kembangkan skill IT Anda bersama SI Learn Hub</p>
-              <Link href="/dashboard/categories">
-                <Button size="lg" variant="secondary" className="px-8 py-4 text-lg font-semibold bg-white text-blue-600 hover:bg-gray-100 shadow-lg">
-                  🎯 Mulai Pembelajaran
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>

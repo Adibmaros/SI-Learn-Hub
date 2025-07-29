@@ -18,7 +18,7 @@ export default function Navbar() {
     // Public navigation links (available to everyone)
     const publicLinks = [
       { href: "/dashboard", icon: Home, label: "Home" },
-      { href: "/dashboard/categories", icon: BookOpen, label: "Kategori" },
+      { href: "/dashboard/categories", icon: BookOpen, label: "Materi per semester" },
       { href: "/about", icon: Info, label: "About" },
     ];
 

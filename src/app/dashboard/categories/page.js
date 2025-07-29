@@ -43,7 +43,11 @@ const CategoriesGridSkeleton = () => (
 
 // Async component for stats
 const StatsContent = async () => {
-  const categories = await getCategories();
+  const allCategories = await getCategories();
+
+  // Filter categories yang nama nya mengandung string "semester"
+  const categories = allCategories.filter((category) => category.name && category.name.toLowerCase().includes("semester"));
+
   const totalSeries = categories.reduce((total, cat) => total + (cat.series?.length || 0), 0);
   const totalMaterials = categories.reduce((total, cat) => total + cat.series?.reduce((seriesTotal, series) => seriesTotal + (series.materials?.length || 0), 0), 0);
 
@@ -93,7 +97,10 @@ const StatsContent = async () => {
 
 // Async component for categories grid
 const CategoriesContent = async () => {
-  const categories = await getCategories();
+  const allCategories = await getCategories();
+
+  // Filter categories yang nama nya mengandung string "semester"
+  const categories = allCategories.filter((category) => category.name && category.name.toLowerCase().includes("semester"));
 
   return categories?.length > 0 ? (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -108,11 +115,7 @@ const CategoriesContent = async () => {
           <BookOpen className="w-10 h-10 text-gray-400" />
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">Belum ada kategori</h3>
-        <p className="text-gray-500 mb-6">Kategori pembelajaran belum tersedia. Silakan hubungi administrator untuk menambahkan konten.</p>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          <Plus className="w-4 h-4 mr-2" />
-          Tambah Kategori
-        </Button>
+        <p className="text-gray-500 mb-6">Kategori pembelajaran dengan semester belum tersedia. Silakan hubungi administrator untuk menambahkan konten.</p>
       </div>
     </div>
   );
@@ -129,7 +132,15 @@ const Page = () => {
             <BookOpen className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Kategori Pembelajaran</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">Jelajahi berbagai kategori materi pembelajaran yang tersedia dan tingkatkan kemampuan Anda</p>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed mb-6">Jelajahi berbagai kategori materi pembelajaran yang tersedia dan tingkatkan kemampuan Anda</p>
+
+          {/* Navigation button to all materials */}
+          <Link href="/dashboard/materials">
+            <Button variant="outline" size="lg" className="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all duration-300">
+              <Search className="w-4 h-4" />
+              Lihat Semua Materi
+            </Button>
+          </Link>
         </div>
 
         {/* Stats with Suspense */}
