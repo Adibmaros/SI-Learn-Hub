@@ -1,102 +1,129 @@
-# Next.js Multirole Auth Boilerplate
+# SI-Learn Hub 🎓
 
-Boilerplate Next.js dengan autentikasi multi-role (ADMIN, MODERATOR, USER) menggunakan NextAuth, Prisma, dan proteksi route berbasis role.
-
-## Fitur Utama
-- Login/registrasi dengan email/password & Google
-- Role: ADMIN, MODERATOR, USER
-- Proteksi route via middleware (hanya role tertentu yang bisa akses halaman tertentu)
-- Admin page untuk mengelola user & role
-- Feedback UI/UX untuk aksi penting (edit, hapus, dsb)
-
-## Setup
-1. Clone repo & install dependencies:
-   ```bash
-   npm install
-   # atau
-   yarn install
-   ```
-2. Copy .env.example ke .env dan isi variabel yang dibutuhkan (DATABASE_URL, NEXTAUTH_SECRET, dsb)
-3. Jalankan migrasi & seed user admin:
-   ```bash
-   npx prisma migrate dev
-   node prisma/seed.js # (buat file ini untuk seed user admin/moderator)
-   ```
-4. Jalankan development server:
-   ```bash
-   npm run dev
-   ```
-
-## Manajemen Role
-- Hanya ADMIN yang bisa mengakses halaman `/admin/users` untuk mengubah role user lain.
-- Proteksi route:
-  - `/admin/*` hanya untuk ADMIN
-  - `/moderator/*` hanya untuk MODERATOR & ADMIN
-  - `/dashboard`, `/profile` hanya untuk user login
-
-## Feedback UI/UX
-- Setiap aksi penting (edit, hapus, dsb) akan menampilkan notifikasi sukses/gagal.
-- Jika akses ditolak, user akan diarahkan ke halaman yang sesuai.
-
-## Seed User
-Buat file `prisma/seed.js` untuk membuat user ADMIN/MODERATOR awal. Contoh:
-```js
-// prisma/seed.js
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcryptjs');
-const prisma = new PrismaClient();
-async function main() {
-  await prisma.user.create({
-    data: {
-      email: 'admin@demo.com',
-      password: await bcrypt.hash('admin123', 10),
-      name: 'Admin',
-      role: 'ADMIN',
-    },
-  });
-}
-main();
-```
-
-## Testing
-- Pastikan proteksi role berjalan dengan login sebagai user dengan role berbeda.
-- Cek admin page untuk edit/hapus user & role.
+**SI-Learn Hub** adalah platform e-learning / hub pembelajaran Sistem Informasi berbasis web yang dirancang untuk mengelola dan membagikan materi pembelajaran terstruktur mulai dari kategori, seri kursus (series), hingga materi (video YouTube & dokumen PDF).
 
 ---
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 🚀 Fitur Utama
 
-## Getting Started
+- **Autentikasi & Manajemen Peran (Multi-role Auth)**:
+  - Register & Login (Email & Password) dengan **NextAuth.js**.
+  - Role-based Access Control (**ADMIN** & **USER**).
+  - Middleware Protection (Halaman `/admin/*` hanya dapat diakses oleh Admin).
+- **Manajemen Kategori (Categories)**:
+  - Pengelompokan seri pembelajaran berdasarkan topik/kategori.
+- **Manajemen Seri Pembelajaran (Series)**:
+  - Pembuatan seri belajar lengkap dengan thumbnail cover (integrasi **Supabase Storage**), slug, serta tingkat kesulitan (*Beginner*, *Intermediate*, *Advanced*).
+- **Manajemen Materi Pembelajaran (Materials)**:
+  - Dukungan materi berbentuk Video YouTube (URL/embed) dan Dokumen PDF (Upload ke **Supabase Storage**).
+  - Pengaturan durasi video dan status publikasi (*Published / Draft*).
+- **Dashboard Admin & Pengelolaan User**:
+  - Panel kontrol Admin untuk mengelola pengguna, peran, kategori, seri, dan materi.
+- **Antarmuka Modern & Responsif**:
+  - Di-build dengan **Tailwind CSS**, **Shadcn UI** (Radix UI), dan **Lucide Icons**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠️ Tumpukan Teknologi (Tech Stack)
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Bahasa**: JavaScript / React 19
+- **Database & ORM**: PostgreSQL & [Prisma ORM](https://www.prisma.io/)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+- **File & Image Storage**: [Supabase Storage](https://supabase.com/storage)
+- **Styling**: Tailwind CSS & Shadcn UI / Radix UI
+- **Form Validation**: Zod
+
+---
+
+## 📁 Struktur Direktori Utama
+
+```text
+SI-Learn-Hub/
+├── prisma/
+│   └── schema.prisma         # Skema database (User, Category, Series, Material)
+├── src/
+│   ├── app/                  # Router Next.js (App Router)
+│   │   ├── (auth)/           # Halaman login & register
+│   │   ├── admin/            # Halaman Dashboard Admin (Users, Categories, Series, Materials)
+│   │   ├── api/              # API Routes & NextAuth handler
+│   │   ├── dashboard/        # Dashboard pengguna
+│   │   └── page.js           # Halaman Utama / Landing Page
+│   ├── components/           # Komponen UI Reusable (Shadcn UI & Custom)
+│   ├── hooks/                # Custom React Hooks
+│   ├── lib/                  # Helper & Konfigurasi (Prisma Client, Supabase Client, NextAuth)
+│   └── middleware.js         # Middleware proteksi rute berdasarkan role
+└── public/                   # Asset statis
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ⚡ Panduan Instalasi & Pengaturan
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Prasyarat
+- **Node.js** v18+ dan **npm** / **yarn** / **pnpm**
+- Database **PostgreSQL** (misal: Supabase Database)
+- Akun **Supabase** (untuk API Key & Storage Bucket)
 
-## Learn More
+### 2. Clone Repository & Install Dependencies
+```bash
+git clone https://github.com/Adibmaros/SI-Learn-Hub.git
+cd SI-Learn-Hub
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Konfigurasi Environment Variables
+Buat file `.env` di direktori utama proyek dan lengkapi variabel berikut:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+# Database (PostgreSQL / Supabase)
+DATABASE_URL="postgresql://user:password@host:port/dbname?pgbouncer=true"
+DIRECT_URL="postgresql://user:password@host:port/dbname"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# NextAuth Configuration
+NEXTAUTH_SECRET="buat-secret-key-acak-di-sini"
+NEXTAUTH_URL="http://localhost:3000"
 
-## Deploy on Vercel
+# Supabase Configuration (Storage untuk Thumbnail & PDF)
+NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Migrasi Database & Seed Data
+Jalankan migrasi Prisma untuk membuat tabel database:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx prisma migrate dev
+```
+
+*(Opsional)* Jalankan Prisma Studio untuk melihat & mengedit isi database melalui antarmuka web:
+```bash
+npx prisma studio
+```
+
+### 5. Jalankan Development Server
+```bash
+npm run dev
+```
+
+Buka browser dan akses [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 🔐 Hak Akses & Peran (Role Management)
+
+- **USER**:
+  - Mengakses halaman utama, melihat kategori, seri pembelajaran, dan mempelajari materi.
+  - Mengakses dashboard profil user.
+- **ADMIN**:
+  - Mengakses seluruh rute admin `/admin/*`.
+  - Mengelola peran user (`ADMIN` / `USER`).
+  - Menambah, mengubah, dan menghapus Kategori, Seri Pembelajaran (dengan Upload Thumbnail), serta Materi (dengan Upload PDF & link YouTube).
+
+---
+
+## 📜 Lisensi
+
+Proyek ini dibuat untuk keperluan pembelajaran dan pengembangan platform e-learning Sistem Informasi.
+
